@@ -1,0 +1,3 @@
+Me:: what is the capital of France
+Ai:: The capital of France is Paris.
+Me:: goodbye

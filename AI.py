@@ -32,19 +32,23 @@ r = sr.Recognizer()
 # Function to convert text to
 # speech
 def SpeakText(command):
-	
-	# Initialize the engine
-	engine = pyttsx3.init()
-	engine.say(command) 
-	engine.runAndWait()
+    try:
+        # Initialize the engine
+        engine = pyttsx3.init()
+        engine.say(command) 
+        engine.runAndWait()
+    except Exception as e:
+        print(f"Error in SpeakText function: {e}")
 
 # File to store transcriptions
 transcription_file = "transcriptions.txt"
 
 def save_transcription(role,text):
-    with open(transcription_file, "a") as file:
-        file.write(f"{role.capitalize()}: {text}\n")
-	
+    try:
+        with open(transcription_file, "a") as file:
+            file.write(f"{role.capitalize()}: {text}\n")
+    except Exception as e:
+        print(f"Error saving transcription: {e}")
 # Loop infinitely for user to
 # speak
 def record_text():
@@ -67,6 +71,9 @@ def record_text():
             print(f"Could not request results; {e}")
         except sr.UnknownValueError:
             print("Waiting for your command")
+        except Exception as e:
+            print(f"Error in record_text function: {e}")
+
 
 def open_application(application_name):
     try:
@@ -102,25 +109,32 @@ def send_to_chatGPT(messages, model= "gpt-3.5-turbo"):
 messages = [{"role": "user","content": "You are an AI Assistant."}]
 
 while True:
-  text =record_text()
-  messages.append({"role": "user","content": text})
-  print(f"\x1b[31mMe:{text}\x1b[0m")
-  save_transcription("Me:",text)
+    try:
+        text =record_text()
+        messages.append({"role": "user","content": text})
+        print(f"\x1b[31mMe:{text}\x1b[0m")
+        save_transcription("Me:",text)
 
-  if "open Notepad" in text:
-    open_application("notepad")
-  elif "open Spotify"in text:
-      open_application("spotify")
-  elif "open browser" in text:
-    open_application("browser")
-  elif "open YouTube" in text:
-     open_application("youtube")
-  elif "bye" in text:
-    print(f"\x1b[32mAssistant:Good Bye\x1b[0m")
-    break;
-  else:
-    print(f"\x1b[32mAssistant: Thinking...\x1b[0m")
-    response = send_to_chatGPT(messages)
-    print(f"\x1b[32mAssistant:{response}\x1b[0m")
-    SpeakText(response)
-    save_transcription("AI:",response)
+        if "open Notepad" in text:
+            open_application("notepad")
+        elif "open Spotify"in text:
+            open_application("spotify")
+        elif "open browser" in text:
+            open_application("browser")
+        elif "open YouTube" in text:
+            open_application("youtube")
+        elif "bye" in text:
+            print(f"\x1b[32mAssistant:Good Bye\x1b[0m")
+            break;
+        else:
+            print(f"\x1b[32mAssistant: Thinking...\x1b[0m")
+            response = send_to_chatGPT(messages)
+            print(f"\x1b[32mAssistant:{response}\x1b[0m")
+            SpeakText(response)
+            save_transcription("AI:",response)
+    except KeyboardInterrupt:
+        print("\nUser interrupted the program. Exiting.")
+        break
+
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
