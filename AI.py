@@ -1,12 +1,14 @@
-#python program to translate
-#speech to text and text to speech
+#AI Assistant
 #python 3.11.6
+#speech to text and text to speech
 #pip install SpeechRecognition
 #pip install pyttsx3
+#pip install python-dotenv
+#pip install openai
+
 
 import speech_recognition as sr
 import pyttsx3
-import time
 import os
 import subprocess
 import webbrowser
@@ -17,7 +19,7 @@ OPENAI_KEY = os.getenv('OPENAI_KEY')
 openai.api_key = OPENAI_KEY
 
 
-
+#error checking for API key
 if OPENAI_KEY is None:
     raise ValueError("OPENAI_KEY environment variable is not set.")
 
@@ -87,7 +89,7 @@ def send_to_chatGPT(messages, model= "gpt-3.5-turbo"):
     response = openai.ChatCompletion.create(
         model= model,
         messages = messages,
-        max_tokens =100,
+        max_tokens =200,
         n=1,
         stop=None,
         temperature = 0.5,
@@ -97,7 +99,7 @@ def send_to_chatGPT(messages, model= "gpt-3.5-turbo"):
     return message
    
    
-messages = [{"role": "user","content": " be a IA Assistant."}]
+messages = [{"role": "user","content": "You are an AI Assistant."}]
 
 while True:
   text =record_text()
