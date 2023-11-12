@@ -1,3 +1,16 @@
 Me:: what is the capital of France
 Ai:: The capital of France is Paris.
 Me:: goodbye
+Me:: open Word
+Me:: open BS code
+Me:: what is 2 + 2 - 1
+Me:: open BS code
+Me:: how can I speak English
+Me:: what is your name
+Me:: open YouTube
+Me:: open Word
+Me:: open Word
+Me:: what is the capital of France
+Me:: what is the capital of France
+Ai:: The capital of France is Paris.
+Me:: open Spotify
